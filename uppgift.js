@@ -29,12 +29,6 @@ function run(data) {
     } 
     else if (type === "F") 
     {
-      if (is_in_family) 
-        {
-        indent = indent.slice(0, -2);;
-        output += `${indent}</family>\n`;
-        is_in_family = false;
-      }
       output += `${indent}<family>\n`;
       indent += "  ";
       output += `${indent}<name>${parts[1]}</name>\n`;
@@ -63,8 +57,10 @@ function run(data) {
       output += `${indent}</address>\n`;
     }
   }
-
-  for (const line of data) produce(line);
+  output += `${indent}<people>\n`;
+  for (const line of data) {
+    produce(line);
+  }
 
    // stäng sista tagarna
   if (is_in_family) 
@@ -77,7 +73,7 @@ function run(data) {
     indent = indent.slice(0, -2);;
     output += `${indent}</person>\n`;
   }
-
+  output += `</people>\n`;
   console.log(output);
 }
 
